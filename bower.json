@@ -1,0 +1,28 @@
+{
+  "name": "style-portal-scrollbar",
+  "version": "1.0.0",  
+  "description": "Style Portal Scroll bar",
+  "theme": "minimalism",
+  "authors": ["Austin Hung (EXT-TW)<austin_hung@trend.com.tw>"],  
+  "visual-designer": ["Vannie Chiang (HIE-TW) <vannie_chiang@trend.com.tw>"],
+  "ui-designer": "",
+  "project-manager": ["Hsin Olive Eu (HIE-TW) <HsinOlive_Eu@trend.com.tw>"],
+  "develop-manager": ["Chandler Chou (HIE-TW) <chandler_chou@trend.com.tw>"],  
+  "homepage": "./example/index.html",
+  "snapshots": [
+    "./snapshots/typography.png", 
+    "./snapshots/lists.png", 
+    "./snapshots/tooltips.png", 
+    "./snapshots/forms.png"    
+  ],
+  "keywords": [
+    "style portal",
+    "scroll bar",
+    "table scroll bar"
+  ],
+  "dependencies": {
+    "jquery": "2.2.4",
+    "malihu-custom-scrollbar-plugin": "3.1.5"
+  }, 
+  "license": "MIT"
+}
