@@ -45,10 +45,3 @@
   letter-spacing: -0.03em;
   white-space: nowrap;
 }
-.portal-navigation.collapsed + .site-header {
-  margin-left: 64px;
-}
-.portal-navigation.expand + .site-header {
-  margin-left: 240px;
-  transition: margin 0.1s linear;
-}

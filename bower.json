@@ -10,14 +10,12 @@
   "develop-manager": ["Chandler Chou (HIE-TW) <chandler_chou@trend.com.tw>"],  
   "homepage": "./example/index.html",
   "snapshots": [
-    "./snapshots/typography.png", 
-    "./snapshots/lists.png", 
-    "./snapshots/tooltips.png", 
-    "./snapshots/forms.png"    
+    "./snapshots/general-scrollbars.png", 
+    "./snapshots/table-scrollbars.png" 
   ],
   "keywords": [
-    "style portal",
     "scroll bar",
+    "hidden scroll bar",
     "table scroll bar"
   ],
   "dependencies": {
