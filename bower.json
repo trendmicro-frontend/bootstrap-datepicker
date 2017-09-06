@@ -1,7 +1,7 @@
 {
-  "name": "style-portal-scrollbar",
+  "name": "jquery-scrollbar",
   "version": "1.0.0",  
-  "description": "Style Portal Scroll bar",
+  "description": "jQuery Scroll bar",
   "theme": "minimalism",
   "authors": ["Austin Hung (EXT-TW)<austin_hung@trend.com.tw>"],  
   "visual-designer": ["Vannie Chiang (HIE-TW) <vannie_chiang@trend.com.tw>"],
@@ -14,6 +14,7 @@
     "./snapshots/table-scrollbars.png" 
   ],
   "keywords": [
+    "scrollbar",
     "scroll bar",
     "hidden scroll bar",
     "table scroll bar"
