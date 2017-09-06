@@ -1,7 +1,7 @@
-jQuery Scrollbar
+jQuery Scroll Bar
 ================================
 
-jQuery Scrollbar is developed base on jQuery plugin ([malihu-custom-scrollbar-plugin](https://github.com/malihu/malihu-custom-scrollbar-plugin)), and adopted the Style Portal.
+jQuery Scroll Bar is developed base on jQuery plugin ([malihu-custom-scrollbar-plugin](https://github.com/malihu/malihu-custom-scrollbar-plugin)), and adopted the Style Portal.
 
 Usage 
 -------------------------
