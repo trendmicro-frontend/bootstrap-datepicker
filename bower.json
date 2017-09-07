@@ -1,7 +1,7 @@
 {
   "name": "jquery-scrollbar",
   "version": "1.0.0",  
-  "description": "jQuery Scroll bar",
+  "description": "A jQuery plugin for custom scroll bar.",
   "theme": "minimalism",
   "authors": ["Austin Hung (EXT-TW)<austin_hung@trend.com.tw>"],  
   "visual-designer": ["Vannie Chiang (HIE-TW) <vannie_chiang@trend.com.tw>"],
