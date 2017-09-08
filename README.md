@@ -1,15 +1,15 @@
-jQuery Scroll Bar
+jQuery Date Picker
 ================================
 
-jQuery Scroll Bar is developed base on jQuery plugin ([malihu-custom-scrollbar-plugin](https://github.com/malihu/malihu-custom-scrollbar-plugin)), and adopted the Style Portal.
+jQuery Date Picker is developed base on jQuery plugin ([uxsolutions-bootstrap-datepicker-plugin](https://github.com/uxsolutions/bootstrap-datepicker/blob/master/docs/index.rst)), and adopted the Style Portal.
 
-Usage 
+Usage
 -------------------------
 
-* [malihu-custom-scrollbar-plugin homepage and documentation](http://manos.malihu.gr/jquery-custom-content-scroller/)
-* [Style Portal - Scroll Bars](http://style-portal.tw.trendnet.org/#/styles/minimalism/latest/5d7725aa-ff52-4035-95d6-8220342da195)
+* [uxsolutions-bootstrap-datepicker-plugin homepage and documentation](http://bootstrap-datepicker.readthedocs.io/en/latest/)
+* [Style Portal - Date Picker](http://style-portal.tw.trendnet.org/#/styles/minimalism/1.7.0/f67b16d7-2d35-4c9c-bc5a-02e2824e46c3)
 
-License 
+License
 -------------------------
 
 MIT License (MIT)

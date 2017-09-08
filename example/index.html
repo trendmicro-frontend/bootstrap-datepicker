@@ -8,12 +8,13 @@
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/logo-apple-touch-icon-114.png">
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/logo-apple-touch-icon-72.png">
         <link rel="shortcut icon" href="img/logo_32.png">
-        <title>jQuery Scroll Bar</title>
+        <title>jQuery Date Picker</title>
         <link type="text/css" rel="stylesheet" href="css/button-groups.css" />
         <link type="text/css" rel="stylesheet" href="css/buttons.css" />
         <link type="text/css" rel="stylesheet" href="css/caret.css" />
         <link type="text/css" rel="stylesheet" href="css/dropdowns.css" />
         <link type="text/css" rel="stylesheet" href="css/forms.css" />
+        <link type="text/css" rel="stylesheet" href="css/form-sizes.css" />
         <link type="text/css" rel="stylesheet" href="css/icons.css" />
         <link type="text/css" rel="stylesheet" href="css/input-groups.css" />
         <link type="text/css" rel="stylesheet" href="css/normalize.css" />
@@ -22,19 +23,19 @@
         <link type="text/css" rel="stylesheet" href="css/table-fixed.css" />
         <link type="text/css" rel="stylesheet" href="css/tables.css" />
         <link type="text/css" rel="stylesheet" href="css/type.css" />
-        
+
         <link type="text/css" rel="stylesheet" href="css/header.css" />
         <link type="text/css" rel="stylesheet" href="css/display.css" />
         <link type="text/css" rel="stylesheet" href="css/grid-rows.css" />
         <link type="text/css" rel="stylesheet" href="css/font-awesome.min.css" />
 
-        <link type="text/css" rel="stylesheet" href="../scrollbar.css" />
+        <link type="text/css" rel="stylesheet" href="../datepicker.css" />
     </head>
     <body style="background-color: #eee">
         <header class="site-header" role="banner">
             <a href="" class="banner">
                 <h1 class="site-title">
-                <span id="site-title">jQuery Scroll Bar</span> <small id="site-subtitle"></small>
+                <span id="site-title">jQuery Date Picker</span> <small id="site-subtitle"></small>
                 </h1>
             </a>
         </header>
@@ -42,339 +43,28 @@
             <div class="col-sm-12 col-md-12">
                 <div class="section">
                     <div class="section-content">
-                        <section class="general-scrollbar-example">
-                            <h3 class="section-title">General Scroll Bars</h3>               
-                            <div class="basic-scrollbar-example-container">
-                                <h5>General scroll bar for a drop-down menu</h5>
-                                <div class="dropdown dropdown-filter open">
-                                    <button class="btn btn-border dropdown-toggle" type="button">
-                                        <span class="caret"></span>Sample
-                                    </button>
+                        <section>
+                          <h3 class="section-title">Date Picker</h3>
+                          <p>For detailed UI information, see <a href="http://tw-hie/ui_standards/2010/11/calendar/#date-picker" target="_blank">Date Picker</a>.</p>
+                          <h5>Date Input Field</h5>
+                          <input id="datepicker-input" type="text">
 
-                                    <div class="dropdown-menu">
-                                        <div class="input-icon-group dropdown-menu-filter">
-                                        <input id="filter" type="text" class="form-control" placeholder="Search...">
-
-                                        <label class="input-icon-label" for="filter">
-                                            <i class="fa fa-search"></i>
-                                        </label>
-                                        </div>
-
-                                        <div class="general-scrollable dropdown-menu-scrollable mCustomScrollbar mCustomScrollbar-dragger-hover">
-                                        <ul class="dropdown-menu">
-                                            <li><a href="javascript:;">Menu item one</a></li>
-                                            <li><a href="javascript:;">Menu item two</a></li>
-                                            <li><a href="javascript:;">Menu item three</a></li>
-                                            <li><a href="javascript:;">Menu item four</a></li>
-                                            <li><a href="javascript:;">Menu item five</a></li>
-                                            <li><a href="javascript:;">Menu item six</a></li>
-                                            <li><a href="javascript:;">Menu item seven</a></li>
-                                            <li><a href="javascript:;">Menu item eight</a></li>
-                                            <li><a href="javascript:;">Menu item nine</a></li>
-                                            <li><a href="javascript:;">Menu item ten</a></li>
-                                        </ul>
-                                        </div>
-                                    </div>
-                                    </div>
-                            </div>
-                            <div class="hidden-scrollable-example">
-                                <h5>General scroll bar for a tree view component</h5>
-                                <div class="hidden-scrollable-container">
-                                    <div class="hidden-scrollable mCustomScrollbar mCustomScrollbar-dragger-hover">
-                                        <img src="img/scrollbar_img1_treeview.png">
-                                    </div>
-                                    <div class="hidden-scrollbar-text"><span>Please hover your mouse over the tree view example to see how the scroll bar is presented on the UI.</span></div>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-12 col-md-12">
-                <div class="section">
-                    <div class="section-content">
-                        <section class="table-scrollbar-example">
-                            <h3 class="section-title">Table Scroll Bars</h3>
-                            <div class="table-with-scrollbar">
-                                <div class="div-header">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                            <th>Deployment Plan</th>
-                                            <th>Type</th>
-                                            <th>Appliance</th>
-                                            <th>Deployed</th>
-                                            <th>Creator</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                </div>
-                                <div class="table-scrollable mCustomScrollbar mCustomScrollbar-dragger-fixed">
-                                    <table class="table table-bordered table-hover">
-                                        <tbody>
-                                        <tr>
-                                            <td>Hotfix_DDEI</td>
-                                            <td>Hotfix</td>
-                                            <td>8</td>
-                                            <td>2016-06-02 23:15:00</td>
-                                            <td>Administrator</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Hotfix_DDI_01</td>
-                                            <td>Virtual Analyzer image</td>
-                                            <td>12</td>
-                                            <td>2016-04-18 23:17:20</td>
-                                            <td>Administrator</td>
-                                        </tr>
-                                        <tr>
-                                            <td>TW_Patch_01_DDI</td>
-                                            <td>Firmware</td>
-                                            <td>29</td>
-                                            <td>2016-04-17 21:20:18</td>
-                                            <td>Operator</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Patch_02_DDI</td>
-                                            <td>Hotfix</td>
-                                            <td>10</td>
-                                            <td>2016-03-20 21:00:55</td>
-                                            <td>Operator</td>
-                                        </tr>
-                                        <tr>
-                                            <td>JP_Hotfix_DDI</td>
-                                            <td>Hotfix</td>
-                                            <td>7</td>
-                                            <td>2016-03-11 12:34:02</td>
-                                            <td>Operator</td>
-                                        </tr>
-                                        <tr>
-                                            <td>JP_Hotfix_DDEI_01</td>
-                                            <td>Firmware</td>
-                                            <td>2</td>
-                                            <td>2016-03-10 10:12:36</td>
-                                            <td>Operator</td>
-                                        </tr>
-                                        <tr>
-                                            <td>TW_VA Image_DDAN</td>
-                                            <td>Virtual Analyzer image</td>
-                                            <td>22</td>
-                                            <td>2016-03-08 20:12:22</td>
-                                            <td>Operator</td>
-                                        </tr>
-                                        <tr>
-                                            <td>CN_Hotfix_DDI</td>
-                                            <td>Hotfix</td>
-                                            <td>86</td>
-                                            <td>2016-03-05 05:20:15</td>
-                                            <td>Administrator</td>
-                                        </tr>
-                                        <tr>
-                                            <td>CN_Patch_01_DDAN</td>
-                                            <td>Hotfix</td>
-                                            <td>2</td>
-                                            <td>2016-02-20 21:00:01</td>
-                                            <td>Operator</td>
-                                        </tr>
-                                        <tr>
-                                            <td>CN_Patch_02_DDEI</td>
-                                            <td>Firmware</td>
-                                            <td>6</td>
-                                            <td>2016-02-18 12:50:32</td>
-                                            <td>Operator</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class= "table-pagination">
-                                    <div class="table-pagination-block">
-                                        <div class="pagination-records">Records: 1-10 / 200</div>
-                                        <div class="dropdown">
-                                        <button class="btn btn-xs btn-link dropdown-toggle" data-toggle="dropdown" type="button">
-                                            <span class="caret"></span>10 per page
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-multi-select">
-                                            <li class="selected"><a href="javascript:;">10</a></li>
-                                            <li><a href="javascript:;">25</a></li>
-                                            <li><a href="javascript:;">50</a></li>
-                                            <li><a href="javascript:;">100</a></li>
-                                        </ul>
-                                        </div>
-                                        <div class="pagination-input"><input type="text" value="1"> / 20</div>
-                                        <div>
-                                        <ul class="pagination">
-                                            <li>
-                                            <a href="javascript:;" aria-label="Previous">
-                                                <span class="fa fa-angle-left" aria-hidden="true"></span>
-                                            </a>
-                                            </li>
-                                            <li>
-                                            <a href="javascript:;" aria-label="Next">
-                                                <span class="fa fa-angle-right" aria-hidden="true"></span>
-                                            </a>
-                                            </li>
-                                        </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="table-with-scrollbar">
-                                <div class="table-horizontal-scrollable fixed-column pull-left">
-                                    <table class="table table-bordered table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th>Display Name</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td class="td-link"><a href="javascript:;">DDAN-CLUSTERS-01</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="td-link"><a href="javascript:;">DDAN-HA-MASTER-01</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="td-link"><a href="javascript:;">DDI-01</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="td-link"><a href="javascript:;">DDI-02</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="td-link"><a href="javascript:;">DDEI-01</a></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="table-horizontal-scrollable pull-left mCustomHorizontalScrollbar mCustomScrollbar-dragger-fixed">
-                                    <table class="table table-bordered table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th>IP Address</th>
-                                            <th>VA Image Name - 1</th>
-                                            <th>VA Platform - 1</th>
-                                            <th>VA Image Name - 2</th>
-                                            <th>VA Platform - 2</th>
-                                            <th>VA Image Name - 3</th>
-                                            <th>VA Platform - 3</th>
-                                            <th>Last Deployed Plan</th>
-                                            <th>Product Name</th>
-                                            <th>Agent Version</th>
-                                            <th>Product GUID</th>
-                                            <th>Registered</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>31.8.0.1</td>
-                                            <td>Windows_7_SP1_x86.ova</td>
-                                            <td>Microsoft Windows 7 Professional SP1 Build 7601 32bit</td>
-                                            <td>Windows_8.1_x64.ova</td>
-                                            <td>Microsoft Windows 8.1 Enterprise Build 9600 64bit</td>
-                                            <td>N/A</td>
-                                            <td>N/A</td>
-                                            <td class="td-link"><a href="javascript:;">DDAN 5.8</a></td>
-                                            <td>Deep Discovery Analyzer</td>
-                                            <td>1.1.0.1048</td>
-                                            <td>1F57E0DE-D7CC-4614-B9A8-66BD45F49C88</td>
-                                            <td>2016-06-02 23:15:00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>31.8.0.1</td>
-                                            <td>Windows_7_SP1_x86.ova</td>
-                                            <td>Microsoft Windows 7 Professional SP1 Build 7601 32bit</td>
-                                            <td>Windows_8.1_x64.ova</td>
-                                            <td>Microsoft Windows 8.1 Enterprise Build 9600 64bit</td>
-                                            <td>N/A</td>
-                                            <td>N/A</td>
-                                            <td class="td-link"><a href="javascript:;">DDAN 6.0</a></td>
-                                            <td>Deep Discovery Analyzer</td>
-                                            <td>1.1.0.1048</td>
-                                            <td>9CC8C72A-8841-4B2A-9227-893B87933836</td>
-                                            <td>2016-04-18 23:17:20</td>
-                                        </tr>
-                                        <tr>
-                                            <td>1.54.0.1</td>
-                                            <td>Windows_7_SP1_x86.ova</td>
-                                            <td>Microsoft Windows 7 Professional SP1 Build 7601 32bit</td>
-                                            <td>Windows_8.1_x64.ova</td>
-                                            <td>Microsoft Windows 8.1 Enterprise Build 9600 64bit</td>
-                                            <td>N/A</td>
-                                            <td>N/A</td>
-                                            <td class="td-link"><a href="javascript:;">DDI 3.8 SP5</a></td>
-                                            <td>Deep Discovery Inspector</td>
-                                            <td>1.1.0.1048</td>
-                                            <td>5CB2E852-C419-4182-B05D-D03CB5E451C0</td>
-                                            <td>2016-04-17 21:20:18</td>
-                                        </tr>
-                                        <tr>
-                                            <td>1.54.0.2</td>
-                                            <td>win7sp1-en</td>
-                                            <td>Microsoft Windows 7 Professional SP1 Build 7601 32bit</td>
-                                            <td>Windows_8.1_x64.ova</td>
-                                            <td>Microsoft Windows 8.1 Enterprise Build 9600 64bit</td>
-                                            <td>N/A</td>
-                                            <td>N/A</td>
-                                            <td class="td-link"><a href="javascript:;">DDI 3.8 SP5</a></td>
-                                            <td>Deep Discovery Inspector</td>
-                                            <td>1.1.0.1048</td>
-                                            <td>6BD8F4059EBF-442B9728-3CA4-8AF4-1538</td>
-                                            <td>2016-03-20 21:00:55</td>
-                                        </tr>
-                                        <tr>
-                                            <td>1.56.0.1</td>
-                                            <td>MAK_win7sp1en_offices_noab_ID8</td>
-                                            <td>N/A</td>
-                                            <td>xp-sp3</td>
-                                            <td>Microsoft Windows 8.1 Enterprise Build 9600 64bit</td>
-                                            <td>N/A</td>
-                                            <td>N/A</td>
-                                            <td class="td-link"><a href="javascript:;">DDEI 2.6</a></td>
-                                            <td>Deep Discovery Email Inspector</td>
-                                            <td>1.1.0.1048</td>
-                                            <td>A975331E-D564-4500-AEA5-05486AA6FEEE</td>
-                                            <td>2016-03-11 12:34:02</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class= "table-pagination">
-                                    <div class="table-pagination-block">
-                                        <div class="pagination-records">Records: 1-5 / 5</div>
-                                        <div class="dropdown">
-                                        <button class="btn btn-xs btn-link dropdown-toggle" data-toggle="dropdown" type="button">
-                                            <span class="caret"></span>10 per page
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-multi-select">
-                                            <li class="selected"><a href="javascript:;">10</a></li>
-                                            <li><a href="javascript:;">25</a></li>
-                                            <li><a href="javascript:;">50</a></li>
-                                            <li><a href="javascript:;">100</a></li>
-                                        </ul>
-                                        </div>
-                                        <div class="pagination-input"><input type="text" value="1"> / 1</div>
-                                        <div>
-                                        <ul class="pagination">
-                                            <li>
-                                            <a href="javascript:;" aria-label="Previous">
-                                                <span class="fa fa-angle-left" aria-hidden="true"></span>
-                                            </a>
-                                            </li>
-                                            <li>
-                                            <a href="javascript:;" aria-label="Next">
-                                                <span class="fa fa-angle-right" aria-hidden="true"></span>
-                                            </a>
-                                            </li>
-                                        </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                          <!--div id="datepicker-container" class="dropdown-menu"></div-->
+                          <!--div class="date-picker input-icon-group">
+                              <input id="datepicker-input" type="text" class="form-control input-width-xs" placeholder="yyyy-mm-dd">
+                              <label class="input-icon-label" for="datepicker-input">
+                                <i class="fa fa-calendar"></i>
+                              </label>
+                              <div id="datepicker-container" class="dropdown-menu"></div>
+                          </div-->
                         </section>
                     </div>
                 </div>
             </div>
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.js"></script>
-        <script src="../jquery.mCustomScrollbar.concat.min.js"></script>
-        <script src="js/scrollbar.js"></script>
+        <script src="../vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+        <script src="../datepicker.js"></script>
+        <script src="js/main.js"></script>
     </body>
 </html>
