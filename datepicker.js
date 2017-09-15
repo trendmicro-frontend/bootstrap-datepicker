@@ -29,41 +29,609 @@
 
   'use strict';
 
-  var static_datepicker   = $.fn.datepicker;
+  var static_datepicker   = $.fn._datepicker = $.fn.datepicker;
   var datepickerWrapper   = '<div class="datepicker-wrapper input-icon-group"></div>';
   var datepickerLabel     = '<label class="input-icon-label"><i class="fa fa-calendar"></i></label>';
   var datepickerContainer = '<div class="dropdown-menu" data-role="datepicker"></div>';
+
+  var MIN_YEAR = 1900;
+  var MAX_YEAR = 9999;
+	var DATE_REG = /\d{2,4}(\D{1})\d{2,4}(\D{1})\d{2,4}/;
+	var KEY = {
+		DOWN: 'D',
+		UP: 'U',
+		LEFT: 'L',
+		RIGHT: 'R',
+		TAB: 'T'
+  };
+
+  /* Utilities */
+	function pad (num, n) {
+    var len = num.toString().length;
+    while (len < n) {
+      num = "0" + num;
+      len++;
+    }
+    return num;
+  }
+
+  function parseFormat () {
+    $.each(this.$formater, (function (index, format) {
+      var unit = format.substr(0,1).toUpperCase();
+      var pos = this[unit + '_POS'];
+      var prepos, nextpos;
+
+      this.$formater[index - 1] && (prepos = this[this.$formater[index - 1].substr(0,1).toUpperCase() + '_POS']);
+      this.$formater[index + 1] && (nextpos = this[this.$formater[index + 1].substr(0,1).toUpperCase() + '_POS']);
+
+      pos.length = format.length;
+
+      if (index === 0) {
+        pos.start = 0;
+        pos.end = pos.length - 1 + this.$splitters[index].length;
+        pos.prev = undefined;
+        pos.next = nextpos;
+      } else {
+        pos.start = prepos.end + 1;
+        pos.end = this.$splitters[index] ? pos.start + pos.length - 1 + this.$splitters[index].length : pos.start + pos.length;
+        pos.prev = prepos;
+        pos.next = nextpos || undefined;
+      }
+
+      this.position.push(pos);
+    }).bind(this));
+  }
+
+  function getChunkPosition (start, end) {
+    var position = this.position[0];
+    if (start >= this.Y_POS.start && start <= this.Y_POS.end && end >= this.Y_POS.start && end <= this.Y_POS.end) {
+      position = this.Y_POS;
+    }
+    if (start >= this.M_POS.start && start <= this.M_POS.end && end >= this.M_POS.start && end <= this.M_POS.end) {
+      position = this.M_POS;
+    }
+    if (start >= this.D_POS.start && start <= this.D_POS.end && end >= this.D_POS.start && end <= this.D_POS.end) {
+      position = this.D_POS;
+    }
+    return position;
+  }
+
+  function getChunkNumber (value, position) {
+
+    return parseInt(value.substring(position.start, position.end), 10);
+
+  }
+
+  function getLastDate (year, month) {
+    return new Date(year, month, 0).getDate();
+  }
+
+  function textReplace (value, position) {
+    var splitter = this.$splitters.slice(0);
+
+    return this.position.reduce.call(this.position, (function (acc, current) {
+      if (current === position) {
+        return acc + pad(value, position.length) + (splitter.shift() || "");
+      } else {
+        return acc + pad(this['org' + current.indicate], current.length) + (splitter.shift() || "");
+      }
+    }).bind(this), "");
+	}
 
   // DATEPICKER CLASS DEFINITION
   // ===========================
 
   var Datepicker = function (element, options) {
-    this.options              = options;
-    this.$body                = $(document.body);
-    this.$datepickerWrapper   = $(datepickerWrapper);
-    this.$element             = $(element).addClass('form-control input-width-xs').attr({ 'data-role': 'datepicker-input', placeholder: this.options.format });
-    this.$label               = $(datepickerLabel).attr('for', this.$element.attr('id'));
-    this.$datepickerContainer = $(datepickerContainer);
+    this.Y_POS = { indicate: 'Y' };
+    this.M_POS = { indicate: 'M' };
+    this.D_POS = { indicate: 'D' };
+    this.position = [];
+
+    this.options                   = options;
+    this.$body                     = $(document.body);
+    this.$datepickerWrapper        = $(datepickerWrapper);
+    this.$element                  = $(element).addClass('form-control input-width-xs').attr({ 'data-role': 'datepicker-input', placeholder: this.options.format });
+    this.$label                    = $(datepickerLabel).attr('for', this.$element.attr('id'));
+    this.$datepickerContainer      = $(datepickerContainer);
+    this.$splitters = this.options.format.split(/dd|mm|yyyy|DD|MM|yy/gi), this.$splitters.pop(), this.$splitters.shift(), this.$splitters;
+    this.$formater  = this.options.format.match(/dd|mm|yyyy|DD|MM|yy/gi);
+
+    parseFormat.call(this);
 
     this.$datepickerWrapper.insertBefore(this.$element).append(this.$element, this.$label, this.$datepickerContainer);
-
     this.init();
   };
 
   Datepicker.VERSION = '1.0.0';
 
   Datepicker.DEFAULTS = {
-    format: 'yyyy-mm-dd',
+    format: 'mm-yyyy-dd',
     todayHighlight: true,
-	  autoclose: true,
-	  keyboardNavigation: false
+	  autoclose: false,
+    keyboardNavigation: false
   };
-
 
   Datepicker.prototype =  {
     init: function () {
-      static_datepicker.call(this.$datepickerContainer, this.options);
-    }
+      var date = this.$element.val();
+      this.$datepickerContainer.attr('data-date', date);
+      this.$datepickerContainer._datepicker(this.options);
+      $(".prev", this.$datepickerContainer).find("i").attr('class', 'fa fa-angle-left');
+      $(".next", this.$datepickerContainer).find("i").attr('class', 'fa fa-angle-right');
+
+      // Initial varaibles
+      this.orgY = getChunkNumber(date, this.Y_POS);
+      this.orgM = getChunkNumber(date, this.M_POS);
+      this.orgD = getChunkNumber(date, this.D_POS);
+
+      this.tmpY = [];
+      this.tmpM = [];
+      this.tmpD = [];
+    },
+
+    _doFocus: function (e) {
+			var input = this.$element;
+			var value = input.val();
+			var start = input.prop('selectionStart');
+      var end = input.prop('selectionEnd');
+      if (start === 0 && end === 10) {
+        this._showField(this.position[0]);
+        this._doEdit();
+      }
+    },
+
+    _doBlur: function (e) {
+      this._tmpCheck({});
+    },
+
+    _doEdit: function (e) {
+
+			var input = this.$element;
+			var value = input.val();
+			var start = input.prop('selectionStart');
+			var end = input.prop('selectionEnd');
+			var position = getChunkPosition.call(this, start, end);
+
+			if (!this._tmpCheck(position)) {
+
+				this.orgY = getChunkNumber(value, this.Y_POS);
+        this.orgM = getChunkNumber(value, this.M_POS);
+        this.orgD = getChunkNumber(value, this.D_POS);
+				this.tmpY = [];
+				this.tmpM = [];
+				this.tmpD = [];
+
+			}
+
+			if (position.indicate) {
+				this._showField(position);
+				this._edit(value);
+			}
+
+    },
+
+    _doKeydown: function (e) {
+      var input = this.$element;
+      var start = input.prop('selectionStart');
+      var end = input.prop('selectionEnd');
+      var position = getChunkPosition.call(this, start, end);
+      var enterNum = e.key;
+      var splitter = this.$splitters;
+      var dateText;
+
+      if (position.indicate) {
+        // Up/Down arrow Key to change the digits
+        if (e.keyCode == 40) this._doUpDown(KEY.DOWN, position);
+          else if (e.keyCode == 38) this._doUpDown(KEY.UP, position);
+
+        // Tab and Left/Right arrow Key to move selected position
+        if (e.keyCode == 39) {
+          this._doLeftRight(KEY.RIGHT, position);
+        } else if (e.keyCode == 37) {
+          this._doLeftRight(KEY.LEFT, position);
+        } else if (e.keyCode == 9) {
+          if (e.shiftKey === true) {
+            this._doLeftRight(KEY.LEFT, position) || e.preventDefault();
+          } else {
+            this._doLeftRight(KEY.RIGHT, position) || e.preventDefault();
+          }
+        }
+
+        // Insert Number
+        if (/^\d$/.test(enterNum)) {
+          this._doInsertNumber(enterNum, position);
+          e.preventDefault();
+
+        } else {
+          // Allow: Ctrl/cmd+C
+          // if (e.keyCode == 67 && (e.ctrlKey === true || e.metaKey === true)) return true;
+
+          // e.preventDefault();
+          // return false;
+        // // Allow: Delete/Backword
+        // // if (e.keyCode === 8 || e.keyCode === 46) {
+        // // 	this._doBack(position);
+        // // }
+        // e.preventDefault();
+      //   	return false;
+        }
+
+      } else {
+
+        // // Allow: Ctrl/cmd+C
+        // if (e.keyCode == 67 && (e.ctrlKey === true || e.metaKey === true)) return true;
+
+        // e.preventDefault();
+        //   return false;
+      }
+
+      return false;
+    },
+
+    _doInsertNumber: function (enterNum, position) {
+
+      var tmp = this['tmp' + position.indicate];
+      tmp.push(enterNum);
+
+      var tmpString = tmp.join('');
+      var tmpNumber = parseInt(tmpString, 10);
+      var lastDate;
+
+      if(position.indicate === 'Y') {
+        if (tmp.length === position.length) {
+          this.orgY = tmpNumber;
+          this._jumpNextChunk(position);
+        } else {
+          this._stayCurrentChunk(position);
+        }
+      }
+
+      if(position.indicate === 'M') {
+        if ((tmpNumber > 1 && tmpNumber < 10) || tmp.length === position.length) {
+          if (tmpNumber > 12) {
+            this.orgM = 12;
+          } else if (tmpNumber < 1) {
+            this.orgM = 1;
+          } else {
+            this.orgM = tmpNumber;
+          }
+          this._jumpNextChunk(position);
+        } else {
+          this._stayCurrentChunk(position);
+          if (tmpNumber == 1) {
+            this._change(dateText);
+          }
+        }
+      }
+
+      if (position.indicate === 'D') {
+
+        lastDate = getLastDate(this.orgY, this.orgM);
+
+        if (tmp.length === position.length) {
+          if (tmpNumber > lastDate) {
+            this.orgD = lastDate;
+          } else if (tmpNumber < 1) {
+            this.orgD = 1;
+          } else {
+            this.orgD = tmpNumber;
+          }
+          this._jumpNextChunk(position);
+
+        } else {
+
+          var dateText = textReplace.call(this, tmpString, position);
+          var canContinue = false;
+
+          for (var i = 0; i < 10; i++) {
+            var targetDate = parseInt(tmpString + i.toString(), 10);
+            if (targetDate <= lastDate) canContinue = true;
+          }
+          if (canContinue) {
+            this.element.val(dateText);
+            this._showField(position);
+            if (tmpNumber > 0) {
+              this._change(dateText);
+            }
+          } else {
+            this.orgD = tmpNumber;
+            this._jumpNextChunk(position);
+          }
+        }
+      }
+
+
+
+      // } else if (position.indicate === 'D') {
+
+      //   lastDate = getLastDate(this.orgY, this.orgM);
+
+      //   if (tmp.length === 2) {      //
+
+      //   } else {
+
+      //     dateText = textReplace(this.orgY, this.orgM, tmpString, splitter);
+
+      //     var lastDate = getLastDate(this.orgY, this.orgM);
+      //     var canContinue = false;
+
+      //     for (var i = 0; i < 10; i++) {
+      //       var targetDate = parseInt(tmpString + i.toString(), 10);
+      //       if (targetDate <= lastDate) canContinue = true;
+      //     }
+
+      //     if (canContinue) {
+      //       this.element.val(dateText);
+      //       this._showField(position);
+      //       if (tmpNumber > 0) {
+      //         this._change(dateText);
+      //       }
+      //     } else {
+      //       this.orgD = tmpNumber;
+      //       dateText = this._autoCorrect(position.indicate);
+      //       this.element.val(dateText);
+      //       this._showField(position);
+      //       this._change(dateText);
+      //     }
+      //   }
+
+      // }
+
+    },
+
+    _doUpDown: function (direction, position) {
+
+      var dateText;
+      var lastDate;
+
+      this._applyTemp(position.indicate);
+
+      if (position.indicate === 'Y') {
+
+        if (direction === KEY.DOWN) this.orgY > MIN_YEAR ? this.orgY-- : this.orgY === MIN_YEAR ? this.orgY = MAX_YEAR : this.orgY = MIN_YEAR;
+          else this.orgY < MAX_YEAR ? this.orgY++ : this.orgY === MAX_YEAR ? this.orgY = MIN_YEAR : this.orgY = MAX_YEAR;
+
+      } else if (position.indicate === 'M') {
+
+        if (direction === KEY.DOWN) this.orgM > 1 ? this.orgM-- : this.orgM === 1 ? this.orgM = 12 : this.orgM = 1;
+          else this.orgM < 12 ? this.orgM++ : this.orgM === 12 ? this.orgM = 1 : this.orgM = 12;
+
+      } else if (position.indicate === 'D') {
+
+        lastDate = getLastDate(this.orgY, this.orgM);
+
+        if (direction === KEY.DOWN) this.orgD > 1 ? this.orgD-- : this.orgD === 1 ? this.orgD = lastDate : this.orgD = 1;
+          else this.orgD < lastDate ? this.orgD++ : this.orgD === lastDate ? this.orgD = 1 : this.orgD = lastDate;
+
+      }
+
+      dateText = this._autoCorrect(position.indicate);
+
+      this.$element.val(dateText);
+      this._showField(position);
+      this._change(dateText);
+    },
+
+    _doLeftRight: function (direction, position) {
+
+      var tabable = false;
+
+      if(direction === KEY.RIGHT) {
+        if (position.next) {
+          this._correctVal(position);
+          this._showField(position.next);
+          this._next();
+        } else {
+          this._showField(position);
+          tabable = true;
+        }
+      } else {
+        if (position.prev) {
+          this._correctVal(position);
+          this._showField(position.prev);
+          this._prev();
+        } else {
+          this._showField(position);
+          tabable = true;
+        }
+      }
+
+      return tabable;
+    },
+
+    _jumpNextChunk: function (position) {
+      var dateText = this._autoCorrect(position.indicate);
+      this.$element.val(dateText);
+      this._showField(position.next || position);
+      this._change(dateText);
+    },
+    _stayCurrentChunk: function (position) {
+      var dateText = textReplace.call(this, this['tmp' + position.indicate].join(''), position);
+      this.$element.val(dateText);
+      this._showField(position);
+    },
+    _showField: function(position) {
+			var _this = this;
+			this.$element[0].setSelectionRange(position.start, position.end);
+			setTimeout(function () {
+				_this.$element[0].setSelectionRange(position.start, position.end);
+			}, 20);
+    },
+
+    _edit: function (date) {
+      this.$element.trigger($.Event('edit'), [date]);
+    },
+
+    _change: function (date) {
+      this.$element.trigger($.Event('change'), [date]);
+    },
+
+    _prev: function () {
+      this.$element.trigger($.Event('prev'), [this.$element.val()]);
+    },
+
+    _next: function () {
+      this.$element.trigger($.Event('next'), [this.$element.val()]);
+    },
+
+    /* Validators */
+		_tmpCheck: function (position) {
+      var indicate = position.indicate;
+      if (this.tmpY.concat(this.tmpM, this.tmpD).length > 0) {
+        if (indicate) {
+          if (indicate !== 'Y' && this.tmpY.length > 0) {
+            this._correctVal(Y_POS);
+            return true;
+          }
+          if (indicate !== 'M' && this.tmpM.length > 0) {
+            this._correctVal(M_POS);
+            return true;
+          }
+          if (indicate !== 'D' && this.tmpD.length > 0) {
+            this._correctVal(D_POS);
+            return true;
+          }
+        } else {
+          if (this.tmpY.length > 0) this._correctVal(Y_POS);
+          if (this.tmpM.length > 0) this._correctVal(M_POS);
+          if (this.tmpD.length > 0) this._correctVal(D_POS);
+          return true;
+        }
+      }
+
+      return false;
+    },
+
+    _correctVal: function (position) {
+
+      var timeText;
+      if (this._applyTemp(position.indicate) != undefined) {
+        timeText = this._autoCorrect(position.indicate);
+        this.$element.val(timeText);
+        this._change(timeText);
+      }
+
+    },
+
+    _applyTemp: function (indicate) {
+      var tmp = this['tmp' + indicate];
+      if (tmp.length > 0) {
+        this['org' + indicate] = parseInt(tmp.join(''), 10);
+        this['tmp' + indicate] = [];
+        return true;
+      }
+      return false;
+    },
+
+    _autoCorrect: function (indicate) {
+
+      var splitter = this.$splitters.slice(0);
+      var lastDate;
+
+      if (indicate === 'Y') {
+
+        if (this.orgY < MIN_YEAR) this.orgY = MIN_YEAR;
+        if (this.orgY > MAX_YEAR) this.orgY = MAX_YEAR;
+
+        lastDate = getLastDate(this.orgY, this.orgM);
+          if (this.orgD > lastDate) this.orgD = lastDate;
+
+      }
+
+      if (indicate === 'M') {
+
+        if (this.orgM < 1) {
+          if (this.orgY > MIN_YEAR) {
+            this.orgY--;
+            this.orgM = 12;
+          } else {
+            this.orgM = 1;
+          }
+        }
+
+        if (this.orgM > 12) {
+          if (this.orgY < MAX_YEAR) {
+            this.orgM = 1;
+            this.orgY++;
+          } else {
+            this.orgM = 12;
+          }
+        }
+
+        lastDate = getLastDate(this.orgY, this.orgM);
+        if (this.orgD > lastDate) this.orgD = lastDate;
+
+      }
+
+      if (indicate === 'D') {
+
+        if (this.orgD < 1) {
+
+          if (this.orgY === MIN_YEAR && this.orgM === 1) {
+            this.orgD = 1;
+          } else {
+            if (this.orgM === 1) {
+              this.orgY--;
+              this.orgM = 12;
+              this.orgD = 31;
+            } else {
+              this.orgM--;
+              this.orgD = getLastDate(this.orgY, this.orgM);
+            }
+          }
+
+        } else {
+
+          lastDate = getLastDate(this.orgY, this.orgM);
+
+          if (this.orgD > lastDate) {
+            if (this.orgY === MAX_YEAR && this.orgM === 12) {
+              this.orgD = 31;
+            } else {
+              if (this.orgM === 12) {
+                this.orgY++;
+                this.orgM = 1;
+                this.orgD = 31;
+              } else {
+                this.orgM++;
+                this.orgD = 1;
+              }
+            }
+          }
+
+        }
+      }
+
+      this['tmp' + indicate] = [];
+      return this.position.reduce.call(this.position, (function (acc, current) {
+        return acc + pad(this['org' + current.indicate], current.length) + (splitter.shift() || "");
+      }).bind(this), "");
+    },
+
+
+    // _attachEvents: function() {
+
+    //   var _this = this;
+
+    // },
+    /*destroy: function () {
+
+    },
+    show: function () {
+      this.$element.trigger('show');
+    },
+    hide: function () {
+      this.$element.trigger('hide');
+    },
+    update: () {
+
+    },
+    getDate: function () {
+
+    },
+    setDate: function () {
+
+    },*/
   };
 
   // DATEPICKER PLUGIN DEFINITION
@@ -95,12 +663,41 @@
   // ===================
   $(document)
     .on('changeDate changeMonth', '[data-role="datepicker"]', function (e) {
-      $(this).parent().find('input').val($(this).data('datepicker').getFormattedDate());
+      var $this = $(this);
+      $this.parent().find('input').val($this.data('datepicker').getFormattedDate());
     })
-    .on('focus', '[data-role="datepicker-input"]', function (e) {
-      $(this).addClass('input-focus');
-      $(this).parent().find('[data-role="datepicker"]').show();
-    })
+    .on('focus click blur keydown', '[data-role="datepicker-input"]', function (e) {
+      var $this = $(this);
+      var instance = $this.data('bs.datepicker');
+      if (e.type === 'focusin') {
+        instance._doFocus(e);
+        /*
+        $this.addClass('input-focus');
+        $this.parent().find('[data-role="datepicker"]').show();*/
+      }
+      console.log(e.type);
+      if (e.type === 'focusout') {
+        instance._doBlur(e);
+      }
+      if (e.type === 'click') {
+        instance._doEdit(e);
+      }
+      if (e.type === 'keydown') {
+        instance._doKeydown(e);
+      }
+
+    });
+
+
+
+
+    // this.element
+    // .on('click', $.proxy(this._doEdit, this))
+    // .on('keydown', $.proxy(this._doKeydown, this))
+    // .on('blur', $.proxy(this._doBlur, this))
+    // .on('focus', $.proxy(this._doFocus, this));
+
+    // $(document).on('click', $.proxy(this._doUnEdit, this));
 
 }));
 

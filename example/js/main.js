@@ -1,3 +1,4 @@
 var datePicker = $("#datepicker-input");
 
-datePicker.datepicker();
+datePicker.val('09-2017-16').datepicker();
+//datePicker.datepicker();
