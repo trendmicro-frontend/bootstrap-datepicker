@@ -1,6 +1,10 @@
 .datepicker-wrapper .form-control {
   padding-right: 12px;
 }
+.datepicker-wrapper .form-control[disabled] + label {
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+}
 .datepicker {
   padding: 0;
   width: 248px;
