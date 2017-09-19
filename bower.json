@@ -1,27 +1,28 @@
 {
-  "name": "jquery-scrollbar",
-  "version": "1.0.0",  
-  "description": "A jQuery plugin for custom scroll bar.",
+  "name": "jquery-datepicker",
+  "version": "1.0.0",
+  "description": "A jQuery plugin for custom datepicker.",
   "theme": "minimalism",
-  "authors": ["Austin Hung (EXT-TW)<austin_hung@trend.com.tw>"],  
-  "visual-designer": ["Vannie Chiang (HIE-TW) <vannie_chiang@trend.com.tw>"],
-  "ui-designer": "",
+  "authors": [
+    "Joshua Tai (HIE-TW)<joshua_tai@trend.com.tw>",
+    "Austin Hung (HIE-TW)<austin_h_hung@trend.com.tw>"
+  ],
+  "visual-designer": ["Lesley Chien (HIE-TW-CON) <Lesley_Chien@trend.com.tw>"],
+  "ui-designer": "Hanwen Chang (HIE-TW) <hanwen_chang@trend.com.tw>",
   "project-manager": ["Hsin Olive Eu (HIE-TW) <HsinOlive_Eu@trend.com.tw>"],
-  "develop-manager": ["Chandler Chou (HIE-TW) <chandler_chou@trend.com.tw>"],  
+  "develop-manager": ["Chandler Chou (HIE-TW) <chandler_chou@trend.com.tw>"],
   "homepage": "./example/index.html",
   "snapshots": [
-    "./snapshots/general-scrollbars.png", 
-    "./snapshots/table-scrollbars.png" 
+    "./datepicker-1.png"
   ],
   "keywords": [
-    "scrollbar",
-    "scroll bar",
-    "hidden scroll bar",
-    "table scroll bar"
+    "jquery",
+    "date",
+    "picker",
+    "datepicker"
   ],
   "dependencies": {
-    "jquery": "2.2.4",
-    "malihu-custom-scrollbar-plugin": "3.1.5"
-  }, 
+    "jquery": "2.2.4"
+  },
   "license": "MIT"
 }
