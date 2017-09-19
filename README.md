@@ -30,31 +30,21 @@ $('#datepicker').datepicker(options);
 
 
 ## API
-
 ### Properties
+Name                | Type       | Default       | Description
+:---                | :---       | :------------ | :----------
+format              | String     | 'yyyy-mm-dd'  | The date format, combination of `yyyy, mm, and dd`.
+disabled            | Boolean    | true          | Manimulate whether a date picker will be enabled or disabled.
 
-#### Table
-
-Name                | Type                              | Default | Description
-:---                | :---                              | :------ | :----------
-averageColumnsWidth | Boolean                           | true    | Whether average table cell width.
-bordered            | Boolean                           | true    | Whether table border is shown.
-columns             | Object[]                          | []      | The columns config of table, see table below.
-data                | Object[]                          | []      | Data record array to be rendered.
-emptyText           | Function                          | () => { return 'No Data'; } | Display text when data is empty.
-expandedRowKeys     | String[]                          |         | Current expanded rows keys.
-expandedRowRender   | Function(record, key)             |         | Expanded content render function.
-footer              | React Node or Function(): React Node|       | Table footer render function.
-hoverable           | Boolean                           | true    | Whether use row hover style.
-loading             | Boolean                           | false   | Whether table is loading.
-maxHeight           | Number                            |         | Table maximum height.
-onRowClick          | Function(record, key)             |         | Handle rowClick action.
-showHeader          | Boolean                           | true    | Whether table head is shown.
-sortable            | Boolean                           | false   | Whether use sortting event at table head.
-title               | React Node or Function(): React Node|       | Table title render function.
-useFixedHeader      | Boolean                           | false   | Whether table head is fixed.
-rowClassName        | Function(record, key):string      |         | Get row's className.
-rowKey              | string or Function(record):string | 'key'   | If rowKey is string, `record[rowKey]` will be used as key. If rowKey is function, the return value of `rowKey(record)` will be use as key.
+### Methods
+Name                | Parameters | Return        | Description
+:---                | :---       | :------------ | :----------
+getDate             | None       | Date Object   | Returns a localized date object representing the internal date object of the first datepicker in the selection. For multidate pickers, returns the latest date selected.
+getUTCDate          | None       | Date Object   | Returns the internal UTC date object, as-is and unconverted to local time, of the first datepicker in the selection. For multidate pickers, returns the latest date selected.
+setDate             | date (Date)| None          | Sets the internal date. `date` is assumed to be a “local” date object, and will be converted to UTC for internal use.
+setUTCDate          | date (Date)| None          | Sets the internal date. `date` is assumed to be a UTC date object, and will not be converted.
+disable             | None       | None          | Disables the datepicker.
+destroy             | None       | None          | Removes the datepicker functionality completely. This will return the element back to its pre-init state.
 
 ## License
 [MIT License (MIT)](http://opensource.org/licenses/MIT)

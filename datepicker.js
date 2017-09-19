@@ -146,7 +146,8 @@
     format: 'yyyy-mm-dd',
     todayHighlight: true,
 	  autoclose: false,
-    keyboardNavigation: false
+    keyboardNavigation: false,
+    disabled: false
   };
 
   Datepicker.prototype =  {
@@ -160,14 +161,18 @@
         this.$datepickerContainer._datepicker(this.options);
       }
 
-      $(".prev", this.$datepickerContainer).find("i").attr('class', 'fa fa-angle-left');
-      $(".next", this.$datepickerContainer).find("i").attr('class', 'fa fa-angle-right');
-
       // Initial varaibles
       this.position.forEach(function (pos) {
         this['org' + pos.indicate] = getChunkNumber(date, pos);
         this['tmp' + pos.indicate] = [];
       }, this);
+
+      if (this.options.disabled === true) {
+        this.disable();
+      }
+
+      $(".prev", this.$datepickerContainer).find("i").attr('class', 'fa fa-angle-left');
+      $(".next", this.$datepickerContainer).find("i").attr('class', 'fa fa-angle-right');
 
       $(document).on('click', $.proxy(this._doUnEdit, this));
     },
@@ -559,7 +564,6 @@
       this.$element.val(this.$datepickerContainer.data('datepicker').getFormattedDate());
     },
     disable: function () {
-
       this.$element.attr('disabled', true);
     },
     destroy: function () {
