@@ -46,5 +46,14 @@ setUTCDate          | date (Date)| None          | Sets the internal date. `date
 disable             | None       | None          | Disables the datepicker.
 destroy             | None       | None          | Removes the datepicker functionality completely. This will return the element back to its pre-init state.
 
+### Events
+Name                | Parameters                          | Return   | Description
+:---                | :---                                | :--------| :----------
+change(event, date) | Event object, formatted date string | None     | Triggered when the date is changed.
+focus(event)        | Event object                        | None     | Triggered when the input element of datepicker is focused in.
+click(event)        | Event object                        | None     | Triggered when the input element of datepicker is clicked.
+blur(event)         | Event object                        | None     | Triggered when the input element of datepicker is focused out.
+keydown(event)      | Event object                        | None     | Triggered when the keydown behavior is on the input element of datepicker.
+
 ## License
 [MIT License (MIT)](http://opensource.org/licenses/MIT)
