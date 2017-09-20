@@ -1,5 +1,5 @@
 /* =========================================================
- * jquery-date-picker.js
+ * bootstrap-date-picker.js
  * Repo: https://adc.github.trendmicro.com/hie-ui/bootstrap-datepicker
  * Demo: https://eternicode.github.io/bootstrap-datepicker/
  * Docs: https://bootstrap-datepicker.readthedocs.org/
