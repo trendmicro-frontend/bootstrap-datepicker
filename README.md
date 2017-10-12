@@ -1,6 +1,6 @@
 # Bootstrap Date Picker
 
-Bootstrap Date Picker is developed base on the Bootstrap plugin ([uxsolutions-bootstrap-datepicker-plugin](https://github.com/uxsolutions/bootstrap-datepicker/blob/master/docs/index.rst)), and adopted the Style Portal.
+Bootstrap Date Picker is developed base on the Bootstrap plugin ([uxsolutions-bootstrap-datepicker-plugin](https://github.com/uxsolutions/bootstrap-datepicker/blob/master/docs/index.rst)), and adopted the Trend Micro Style Portal.
 
 ## Usage
 ### HTML
