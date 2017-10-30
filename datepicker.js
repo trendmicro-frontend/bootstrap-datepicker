@@ -32,7 +32,7 @@
   var static_datepicker   = $.fn._datepicker = $.fn.datepicker;
   var datepickerWrapper   = '<div class="datepicker-wrapper input-icon-group"></div>';
   var datepickerLabel     = '<label class="input-icon-label"><i class="fa fa-calendar"></i></label>';
-  var datepickerContainer = '<div class="dropdown-menu" data-role="datepicker"></div>';
+  var datepickerContainer = '<div data-role="datepicker"></div>';
 
   var MIN_YEAR = 1900;
   var MAX_YEAR = 9999;
@@ -136,7 +136,14 @@
     parseFormat.call(this);
     this.orgClass = this.$element.attr('class');
     this.$element.addClass('form-control input-width-xs').attr({ 'data-role': 'datepicker-input' });
-    this.$datepickerWrapper.insertBefore(this.$element).append(this.$element, this.$label, this.$datepickerContainer);
+    this.$datepickerWrapper.insertBefore(this.$element).append(this.$element, this.$label);
+    if (typeof options.container === 'string') {
+      if (options.container === 'self') this.$datepickerWrapper.append(this.$datepickerContainer);
+      else $(options.container).append(this.$datepickerContainer);
+    } else {
+      $(options.container).append(this.$datepickerContainer);
+    }
+    
     this._init();
   };
 
@@ -145,9 +152,11 @@
   Datepicker.DEFAULTS = {
     format: 'yyyy-mm-dd',
     todayHighlight: true,
+    container: 'self',
 	  autoclose: false,
     keyboardNavigation: false,
-    disabled: false
+    disabled: false,
+    isInline: false
   };
 
   Datepicker.prototype =  {
@@ -160,7 +169,9 @@
         this.$datepickerContainer.attr('data-date', date);
         this.$datepickerContainer._datepicker(this.options);
       }
-
+      if (this.options.isInline === false) {
+        this.$datepickerContainer.addClass('dropdown-menu');
+      }
       // Initial varaibles
       this.position.forEach(function (pos) {
         this['org' + pos.indicate] = getChunkNumber(date, pos);
@@ -181,7 +192,7 @@
 			var value = input.val();
 			var start = input.prop('selectionStart');
       var end = input.prop('selectionEnd');
-      if (start === 0 && end === 10) {
+      if (start !== 0 && end !== 0) {
         this._showField(this.position[0]);
         this._doEdit();
       }
@@ -635,12 +646,12 @@
     .on('edit', '[data-role="datepicker-input"]', function (e, date) {
       var $this = $(this).addClass('input-focus');
       var instance = $this.data('bs.datepicker');
-      instance.$datepickerContainer.show();
+      if (!instance.options.isInline) instance.$datepickerContainer.show();
     })
     .on('unedit next prev', '[data-role="datepicker-input"]', function (e) {
       var $this = $(this).removeClass('input-focus');
       var instance = $this.data('bs.datepicker');
-      instance.$datepickerContainer.hide();
+      if (!instance.options.isInline) instance.$datepickerContainer.hide();
     })
     .on('change', '[data-role="datepicker-input"]', function (e, date) {
       $(this).data('bs.datepicker').$datepickerContainer._datepicker('update', date);
