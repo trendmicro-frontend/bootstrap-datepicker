@@ -9,6 +9,9 @@
   padding: 0;
   width: 248px;
 }
+.datepicker label {
+  cursor: default;
+}
 .datepicker.days div.datepicker-days {
   display: block;
 }
@@ -133,6 +136,7 @@
   color: #222222;
   vertical-align: top;
   margin-top: 1px;
+  margin-right: 0;
 }
 .datepicker .dow {
   font-size: 12px;
@@ -140,59 +144,6 @@
   color: #222222;
   padding-top: 9px;
 }
-.date-time-picker-example .custom-wrapper {
-  position: absolute;
-  left: 0;
-  border: 1px solid #bbbbbb;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-}
-.date-time-picker-example .custom-wrapper > ul.dropdown-menu {
-  position: static;
-}
-.date-time-picker-example .custom-wrapper .date-picker-pane {
-  padding: 12px;
-  border-left: 1px solid #dddddd;
-}
-.date-time-picker-example .custom-wrapper .date-picker-pane.show {
-  display: inline-block !important;
-}
-.date-time-picker-example .custom-wrapper .date-picker-pane .date-picker-pane-header .tilde {
-  width: 24px;
-}
-.date-time-picker-example .custom-wrapper .date-picker-pane .date-picker-pane-body {
-  margin-top: 8px;
-}
-.date-time-picker-example .custom-wrapper .date-picker-pane .date-picker-pane-body .date-picker-pane-container {
-  float: left;
-}
-.date-time-picker-example .custom-wrapper .date-picker-pane .date-picker-pane-body .date-picker-pane-container .datepicker table {
-  padding: 0 3px;
-}
-.date-time-picker-example .custom-wrapper .date-picker-pane .date-picker-pane-body .date-picker-pane-container + .date-picker-pane-container {
-  margin-left: 24px;
-}
-.date-time-picker-example .custom-wrapper .date-picker-pane .date-picker-pane-body .date-picker-pane-container + .date-picker-pane-container:before {
-  content: ' ';
-  display: block;
-  height: 260px;
-  vertical-align: middle;
-  margin-left: -12px;
-  float: left;
-  margin-right: 12px;
-  margin-top: 16px;
-  border-left: 1px solid #E6E6E6;
-}
-.date-time-picker-example .custom-wrapper .date-picker-pane .date-picker-pane-footer {
-  margin-top: 12px;
-}
-.date-time-picker-example .dropdown.open > .custom-wrapper > ul.dropdown-menu {
-  display: inline-block;
-  border: 0;
-  box-shadow: none;
-}
-.date-time-picker-example .simple-date-time-container .input-icon-group {
-  float: left;
-}
-.date-time-picker-example .simple-date-time-container .input-icon-group + .input-icon-group {
-  margin-left: 8px;
+.datepicker tfoot {
+  display: none;
 }
