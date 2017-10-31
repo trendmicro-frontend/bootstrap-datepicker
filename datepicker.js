@@ -202,7 +202,7 @@
           var value = input.val();
           var start = input.prop('selectionStart');
           var end = input.prop('selectionEnd');
-          if (start !== 0 && end !== 0) {
+          if (!(start === 0 && end === 0)) {
               this._showField(this.position[0]);
               this._doEdit();
           }
